@@ -5,13 +5,22 @@ from datetime import datetime
 
 #transforms .txt into .csv. Watch out for the 
 
+def safe_float_conversion(value):
+    try:
+        return float(value.replace(',', '.'))
+    except ValueError:
+        return np.nan
 
 
 def read_data(file_path):
     if file_path.endswith('.csv'):
-        data = pd.read_csv()
+        data = data = pd.read_csv("C:/dev/Vibpy/test/testess.txt", sep='\\s+', encoding= 'utf-16-le',
+                    names= ['timestamp', 'acceleration'],  on_bad_lines= 'skip',
+                    converters={'timestamp': safe_float_conversion, 'acceleration': safe_float_conversion},
+                    decimal= ',')
     elif file_path.endswith('.xls') or file_path.endswith('.xlsx'):
         data = pd.read_excel(file_path)
+        data['acceleration'] = data['acceleration'].astype(float)
     else:
         raise ValueError("Unsupported file format")
     return data
@@ -36,7 +45,7 @@ def VibData(t, trg, res, fMin, fMax, data):
     return results
 
 # Exemplo de uso
-file_path = 'path/to/your/data.csv'
+file_path = 'C:/dev/Vibpy/teste2.csv'
 data = read_data(file_path)
 # Aqui, os valores de t, trg, res, fMin e fMax devem ser definidos conforme necessário
 resultados = VibData(t=60, trg=0.5, res=0.01, fMin=0.1, fMax=50, data=data)

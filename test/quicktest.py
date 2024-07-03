@@ -13,10 +13,17 @@
 import pandas as pd
 import numpy as np
 
+def safe_float_conversion(value):
+    try:
+        return float(value.replace(',', '.'))
+    except ValueError:
+        return np.nan
 
-# latin1 encoding
-data = pd.read_csv("C:/dev/Vibpy/test/testess.txt", sep='\\s+', encoding= 'utf-16-le', on_bad_lines= 'skip')
+data = pd.read_csv("C:/dev/Vibpy/test/testess.txt", sep='\\s+', encoding= 'utf-16-le',
+                    names= ['timestamp', 'acceleration'],  on_bad_lines= 'skip',
+                    converters={'timestamp': safe_float_conversion, 'acceleration': safe_float_conversion},
+                    decimal= ',')
 
-data.to_csv('teste.csv', index= None)
+data.to_csv('teste2.csv', index= None)
 
 print(data)

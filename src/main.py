@@ -30,11 +30,11 @@ def VibData(t, trg, res, fMin, fMax, data):
     num_intervals = len(data) // t
     
     for i in range(num_intervals):
-        interval_data = data[i*t : (i+1)*t]
+        interval_data = data.iloc[i*t : (i+1)*t].dropna(subset=['acceleration'])
         aMax = interval_data['acceleration'].max()
         vRMS = np.sqrt(np.mean(interval_data['acceleration']**2))
         
-        fft_vals = fft(interval_data['acceleration'])
+        fft_vals = fft(interval_data['acceleration'].to_numpy())
         fft_freqs = np.fft.fftfreq(len(fft_vals), d=res)
         
         filtered_fft = [(freq, amp) for freq, amp in zip(fft_freqs, fft_vals) if fMin <= abs(freq) <= fMax]

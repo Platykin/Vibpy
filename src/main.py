@@ -50,5 +50,8 @@ data = read_data(file_path)
 # Aqui, os valores de t, trg, res, fMin e fMax devem ser definidos conforme necessário
 resultados = VibData(t=60, trg=0.5, res=0.01, fMin=0.1, fMax=50, data=data)
 
+converted_fft_df = pd.DataFrame(resultados)
+
+
 for r in resultados:
     print(r)

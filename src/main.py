@@ -51,7 +51,11 @@ data = read_data(file_path)
 resultados = VibData(t=60, trg=0.5, res=0.01, fMin=0.1, fMax=50, data=data)
 
 converted_fft_df = pd.DataFrame(resultados)
+converted_fft_df.to_csv("Resultados_FFT", index=False)
 
+resultado_FFT_csv = pd.read_csv("C:/dev/Vibpy/Resultados_FFT", sep=',', encoding= 'utf-16-le',
+                    names= ['date', 'aMax', 'vRMS', 'filtered_fft'],  on_bad_lines= 'skip',
+                    converters={'date': safe_float_conversion, 'aMax': safe_float_conversion, 'vRMS': safe_float_conversion, 'filtered_fft': safe_float_conversion},
+                    decimal= '.')
 
-for r in resultados:
-    print(r)
+print(resultados)

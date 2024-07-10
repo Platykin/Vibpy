@@ -44,18 +44,17 @@ def VibData(t, trg, res, fMin, fMax, data):
     
     return results
 
-# Exemplo de uso
 file_path = 'C:/dev/Vibpy/teste2.csv'
 data = read_data(file_path)
-# Aqui, os valores de t, trg, res, fMin e fMax devem ser definidos conforme necessário
+
 resultados = VibData(t=60, trg=0.5, res=0.01, fMin=0.1, fMax=50, data=data)
 
 converted_fft_df = pd.DataFrame(resultados)
-converted_fft_df.to_csv("Resultados_FFT", index=False)
+converted_fft_df.to_csv("Resultados_FFT.csv", index=False)
 
 resultado_FFT_csv = pd.read_csv("C:/dev/Vibpy/Resultados_FFT", sep=',', encoding= 'utf-16-le',
                     names= ['date', 'aMax', 'vRMS', 'filtered_fft'],  on_bad_lines= 'skip',
                     converters={'date': safe_float_conversion, 'aMax': safe_float_conversion, 'vRMS': safe_float_conversion, 'filtered_fft': safe_float_conversion},
                     decimal= '.')
 
-print(resultados)
+print(resultado_FFT_csv)

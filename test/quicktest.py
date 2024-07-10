@@ -13,6 +13,7 @@ import pandas as pd
 import numpy as np
 from scipy.fft import fft
 from datetime import datetime
+import matplotlib.pyplot as plt
 
 # def safe_float_conversion(value):
 #     try:
@@ -28,6 +29,15 @@ from datetime import datetime
 # data.to_csv('teste2.csv', index= None)
 
 # print(data)
+
+def fft_graph(frequencys, magnitudes):
+    plt.figure(figsize=(10, 6))
+    plt.plot(frequencys, magnitudes)
+    plt.xlabel('Frequency (Hz)')
+    plt.ylabel('Magnitude')
+    plt.title('FFT of Acceleration Data')
+    plt.grid(True)
+    plt.show()
 
 def safe_float_conversion(value):
     try:
@@ -82,18 +92,21 @@ def VibData(t, res, fMin, fMax, data):
 file_path = 'C:/dev/Vibpy/teste2.csv'
 data = read_data(file_path)
 
-sampling_rate = 800  # Hz
-t = 60 * sampling_rate  # Número de amostras por intervalo
-res = 1 / sampling_rate  # Intervalo de tempo entre amostras
-fMin = 0.1
-fMax = 50
+# Still to add
+# sampling_rate = 800  # Hz
+# t = 60 * sampling_rate  # Número de amostras por intervalo
+# res = 1 / sampling_rate  # Intervalo de tempo entre amostras
+# fMin = 0.1
+# fMax = 50
 
 
-resultados = VibData(t=60, res=0.01, fMin=0.1, fMax=50, data=data)
+resultados = VibData(t=5000, res=0.1, fMin=0.1, fMax=15, data=data)
 
 # print(resultados)
 
 frequencias, magnitudes = extract_fft_components(resultados[0][3])
 
-for i in range(20):
-    print(frequencias[i], "\t", magnitudes[i])
+# for i in range(20):
+#     print(frequencias[i], "\t", magnitudes[i])
+
+fft_graph(frequencias, magnitudes)
